@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block page_name %}
+    List of products
+{% endblock page_name %}
+
+{% block content %}
+    {% for product in products %}
+        <p>
+            Product id: {{ product.id }} |
+            Name: <a href="/show-product/{{ product.id }}">
+                {{ product.name }} |
+            </a>
+            Description: {{ product.description }}
+        </p>
+    {% endfor %}
+{% endblock content %}

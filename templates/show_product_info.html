@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block page_name %}
+    Product info
+{% endblock page_name %}
+
+{% block content %}
+    <div style="width: 50%; float: left;">
+        <h2>{{ product.name }}</h2>
+        <p>Description: {{ product.description }}</p>
+        <p>Price: {{ product.price }}</p>
+        <p>Quantity: {{ product.quantity }}</p>
+        <p>Votes: {{ product.votes }}</p>
+
+
+        <form method="POST">
+            {% csrf_token %}
+            <input type="hidden" value="{{ product.id }}" name="product">
+            <input type="submit" value="Add to basket" name="submit" class="btn btn-sm
+                                btn-success">
+            {% if user.is_superuser %}
+                <input type="submit" value="Delete" name="submit" class="btn btn-sm
+                                btn-danger">
+            {% endif %}
+        </form>
+    </div>
+
+    <div style="width: 50%; float: left;">
+        <h3>Add your comment to the product</h3>
+        <form method="POST">
+            {% csrf_token %}
+            <input type="hidden" value="{{ product.id }}" name="product">
+            <input type="hidden" value="{{ user.id }}" name="customer">
+            <textarea name="text" cols="50" rows="10"></textarea>
+            <p><input type="submit" value="Add comment" name="submit" class="btn btn-sm
+                                btn-info"></p>
+        </form>
+
+        <div>
+            {% for comment in comments %}
+                <p>{{ comment.customer }} - {{ comment.text }}</p>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock content %}

@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block page_name %}
+    My basket
+{% endblock page_name %}
+
+{% block content %}
+    <h2>{{ user_.username }}</h2>
+    <p>User id: {{ user_.id }}</p>
+    <p>Number of products in basket: {{ basket.quantity }}</p>
+
+    <p><strong>List of products:</strong></p>
+    {% for product in product_in_basket %}
+        <div style="border: solid 2px lightblue;">
+            <div style="width: 25%; float: left;">
+                <p>
+                    <a href="/show-product/{{ product.product_id.id }}"><strong>
+                        {{ product.product_id.name }}</strong></a>
+                </p>
+            </div>
+
+            <div style="width: 25%; float: left;">
+                <p>Price pr. stk: {{ product.product_id.price }}</p>
+            </div>
+
+            <div style="width: 25%;  float: left;">
+                <p>Quantity: {{ product.volume_of_product }}</p>
+            </div>
+
+            <div>
+                <form method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" value="{{ product.product_id.id }}" name="product">
+                    <input type="submit" value="Remove from basket" name="submit" class="btn btn-sm
+                    btn-danger">
+                </form>
+
+            </div>
+        </div>
+        <div style="clear: both;"></div>
+    {% endfor %}
+    <div style="width: 25%; height: 10px; float: left;"></div>
+    <div style="width: 25%; float: left;"><strong>Sum: {{ sum_price }}</strong></div>
+    <div style="width: 25%; height: 10px; float: left;"></div>
+        <form method="post">
+        {% csrf_token %}
+                    {% if basket.quantity > 0 %}
+                    <input type="submit" value="Clear all" name="submit" class="btn btn-sm btn-warning">
+                    {% endif %}
+        </form>
+
+{% endblock content %}

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+
+{% block page_name %}
+    Categories of our products
+{% endblock page_name %}
+
+{% block content %}
+    {% for category in categories %}
+        <div style="width: 33%;  float: left;">
+        <a href="/products/{{ category.id }}"><strong>
+            {{ category.name }}</strong></a>
+
+        </div>
+
+        <div>
+
+        <form method="POST">
+            {% csrf_token %}
+            <input type="hidden" value="{{ category.id }}" name="category">
+            {% if user.is_superuser %}
+            <input type="submit" value="Delete" class="btn btn-sm
+                                btn-danger">
+            {% endif %}
+        </form>
+        </div>
+        <div style="clear: both"></div>
+        <p>{{ category.description }}</p>
+
+
+    {% endfor %}
+{% endblock content %}

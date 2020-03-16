@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block page_name %}
+    List of products
+{% endblock page_name %}
+
+
+{% block content %}
+    {% for i in result %}
+        <p><a href="/show-product/{{ i.id }}">{{ i.name }}</a></p>
+    {% endfor %}
+{% endblock %}

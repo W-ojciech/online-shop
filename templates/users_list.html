@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block page_name %}
+    List of customers
+{% endblock page_name %}
+
+{% block content %}
+    {% if user.is_superuser %}
+        {% for user in users %}
+            {% if user.is_superuser == False %}
+                <p>
+                    Customer id: {{ user.id }}
+                    <a href="/show-user/{{ user.id }}">
+                        {{ user.username }}
+                    </a>
+                </p>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+{% endblock content %}

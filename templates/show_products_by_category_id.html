@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block page_name %}
+    Products by categories
+{% endblock page_name %}
+
+{% block content %}
+    <h2>Category name: {{ category.name }}</h2>
+
+    {% for product in products %}
+        <ul>
+            <a href="/show-product/{{ product.id }}">
+                <li>{{ product.name }}</li>
+            </a>
+
+
+            <form method="POST">
+                {% csrf_token %}
+                <input type="hidden" value="{{ product.id }}" name="product">
+                <input type="submit" value="Add to basket" class="btn btn-sm
+                                btn-success">
+            </form>
+        </ul>
+    {% endfor %}
+{% endblock content %}
